@@ -3,8 +3,8 @@ package ua.rd.ioc;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class JavaMapConfig implements Config {
 
+public class JavaMapConfig implements Config {
     private List<String> beanDescriptions;
 
     public JavaMapConfig(List<String> beanDescriptions) {
@@ -13,14 +13,15 @@ public class JavaMapConfig implements Config {
 
     @Override
     public BeanDefinition[] beanDefinitions() {
-        beanDescriptions.stream().map(name -> new BeanDefinition() {
-            @Override
-            public String getBeanName() {
-                return name;
-            }
-        })
-                .toArray(BeanDefinition::new);
-
-        return new BeanDefinition[0];
+        BeanDefinition[] beanDefinitions =
+                beanDescriptions.stream()
+                        .map(this::getBeanDefinition)
+                        .toArray(BeanDefinition[]::new);
+        return beanDefinitions;
     }
+
+    private BeanDefinition getBeanDefinition(String name) {
+        return () -> name;
+    }
+
 }

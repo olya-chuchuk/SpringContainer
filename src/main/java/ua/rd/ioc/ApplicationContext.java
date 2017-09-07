@@ -1,5 +1,8 @@
 package ua.rd.ioc;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ApplicationContext implements Context {
     private BeanDefinition[] beanDefinitions;
 
@@ -11,8 +14,19 @@ public class ApplicationContext implements Context {
         beanDefinitions = Config.EMPTY_BEAN_DEfINITION;
     }
 
+    @Override
     public Object getBean(String beanName) {
-        throw new NoSuchBeanDefinitionException();
+        List<BeanDefinition> beanDefinitions =
+                Arrays.asList(this.beanDefinitions);
+        if (beanDefinitions.stream().map(BeanDefinition::getBeanName).anyMatch(n -> n.equals(beanName))) {
+
+            //TODO найти бин с именем и для него через рефлекшн создать бин с таким имененем
+            return new Object();
+            //BeanDefinition beanDefinition;
+            //return beanDefinition.getBeanType().newInstance();
+        } else {
+            throw new NoSuchBeanDefinitionException();
+        }
     }
 
     public String[] getBeanDefinitionNames() {
