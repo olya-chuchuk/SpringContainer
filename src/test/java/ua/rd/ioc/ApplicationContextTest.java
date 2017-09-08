@@ -118,9 +118,7 @@ public class ApplicationContextTest {
         assertNotNull(bean);
     }
 
-    public static class TestBean {
-        public TestBean() {
-        }
+    static class TestBean {
     }
 
 }

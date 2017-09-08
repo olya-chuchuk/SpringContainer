@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="303caa07-9c98-4827-83ab-e574cf11464c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ua/rd/ioc/ApplicationContext.class" afterPath="$PROJECT_DIR$/target/classes/ua/rd/ioc/ApplicationContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ua/rd/ioc/BeanDefinition.class" afterPath="$PROJECT_DIR$/target/classes/ua/rd/ioc/BeanDefinition.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ua/rd/ioc/Context.class" afterPath="$PROJECT_DIR$/target/classes/ua/rd/ioc/Context.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ua/rd/ioc/JavaMapConfig$1.class" afterPath="$PROJECT_DIR$/target/classes/ua/rd/ioc/JavaMapConfig$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ua/rd/ioc/JavaMapConfig.class" afterPath="$PROJECT_DIR$/target/classes/ua/rd/ioc/JavaMapConfig.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/ua/rd/ioc/ApplicationContextTest.class" afterPath="$PROJECT_DIR$/target/test-classes/ua/rd/ioc/ApplicationContextTest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ua/rd/ioc/ApplicationContext.java" afterPath="$PROJECT_DIR$/src/main/java/ua/rd/ioc/ApplicationContext.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ua/rd/ioc/BeanDefinition.java" afterPath="$PROJECT_DIR$/src/main/java/ua/rd/ioc/BeanDefinition.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ua/rd/ioc/Context.java" afterPath="$PROJECT_DIR$/src/main/java/ua/rd/ioc/Context.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ua/rd/ioc/JavaMapConfig.java" afterPath="$PROJECT_DIR$/src/main/java/ua/rd/ioc/JavaMapConfig.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/ua/rd/ioc/ApplicationContextTest.java" afterPath="$PROJECT_DIR$/src/test/java/ua/rd/ioc/ApplicationContextTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -84,8 +73,8 @@
       <file leaf-file-name="ApplicationContextTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/ua/rd/ioc/ApplicationContextTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="92" column="47" selection-start-line="92" selection-start-column="47" selection-end-line="92" selection-end-column="47" />
+            <state relative-caret-position="349">
+              <caret line="120" column="4" selection-start-line="120" selection-start-column="4" selection-end-line="120" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#299#300#0" expanded="true" />
@@ -93,16 +82,6 @@
                 <element signature="e#388#389#0" expanded="true" />
                 <element signature="e#427#428#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="A.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ua/rd/ioc/A.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -831,17 +810,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1504785546611</updated>
-      <workItem from="1504794989071" duration="10743000" />
+      <workItem from="1504794989071" duration="11502000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ApplicationContextTest - 2017.09.08 at 14h 14m 54s.xml">
-      <configuration name="ApplicationContextTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ApplicationContextTest - 2017.09.08 at 15h 24m 38s.xml">
-      <configuration name="ApplicationContextTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="ApplicationContextTest - 2017.09.08 at 15h 36m 17s.xml">
       <configuration name="ApplicationContextTest" configurationId="JUnit" />
     </history-entry>
@@ -866,9 +839,15 @@
     <history-entry file="ApplicationContextTest - 2017.09.08 at 15h 46m 48s.xml">
       <configuration name="ApplicationContextTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="ApplicationContextTest - 2017.09.08 at 15h 49m 43s.xml">
+      <configuration name="ApplicationContextTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ApplicationContextTest - 2017.09.08 at 16h 40m 43s.xml">
+      <configuration name="ApplicationContextTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10743000" />
+    <option name="totallyTimeSpent" value="11502000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="10" y="20" width="1260" height="944" extended-state="0" />
@@ -882,7 +861,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32799014" sideWeight="0.50333333" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3378545" sideWeight="0.49666667" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3378545" sideWeight="0.49666667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32799014" sideWeight="0.49666667" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1211,8 +1190,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/ua/rd/ioc/ApplicationContextTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="92" column="47" selection-start-line="92" selection-start-column="47" selection-end-line="92" selection-end-column="47" />
+        <state relative-caret-position="349">
+          <caret line="120" column="4" selection-start-line="120" selection-start-column="4" selection-end-line="120" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#299#300#0" expanded="true" />
