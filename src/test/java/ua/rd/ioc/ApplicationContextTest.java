@@ -1,5 +1,7 @@
 package ua.rd.ioc;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import java.util.*;
@@ -7,6 +9,16 @@ import java.util.*;
 import static org.junit.Assert.*;
 
 public class ApplicationContextTest {
+    private Map<String, Class<?>> beanDescriptions;
+
+    @Before
+    public void init() {
+        beanDescriptions = new HashMap<>();
+    }
+    @After
+    public void cleanUp() {
+        beanDescriptions = null;
+    }
     @Test(expected = NoSuchBeanDefinitionException.class)
     public void getBean() throws Exception {
         Context context = new ApplicationContext();
@@ -29,7 +41,8 @@ public class ApplicationContextTest {
     @Test
     public void getBeanDefinitionNamesWithOneBeanDefinition() throws Exception {
         String beanName = "FirstBean";
-        List<String> beanDescriptions = Arrays.asList(beanName);
+        //List<String> beanDescriptions = Arrays.asList(beanName);
+        beanDescriptions.put(beanName, TestBean.class);
         Config config = new JavaMapConfig(beanDescriptions);
         Context context = new ApplicationContext(config);
 
@@ -42,7 +55,6 @@ public class ApplicationContextTest {
     @Test
     public void getBeanDefinitionNamesWithEmptyBeanDefinition() throws Exception {
         //Given
-        List<String> beanDescriptions = Collections.emptyList();
         Config config = new JavaMapConfig( beanDescriptions);
         Context context = new ApplicationContext(config);
         //When
@@ -53,23 +65,32 @@ public class ApplicationContextTest {
     }
 
     @Test
-    public void getBeanDefinitionNamesWithSeveralBeanDefinition() throws Exception {
+    public void getBeanDefinitionNamesWithSeveralBeanDefinitions() throws Exception {
         String beanName1 = "First bean";
         String beanName2 = "Second bean";
-        List<String> beanDescriptions = Arrays.asList(beanName1, beanName2);
+        //List<String> beanDescriptions = Arrays.asList(beanName1, beanName2);
+        beanDescriptions.put(beanName1, TestBean.class);
+        beanDescriptions.put(beanName2, TestBean.class);
         Config config = new JavaMapConfig( beanDescriptions);
         Context context = new ApplicationContext(config);
 
-        String[] actual = context.getBeanDefinitionNames();
+        Set<String> actual = new HashSet<>(Arrays.asList(context.getBeanDefinitionNames()));
 
-        String[] expected = {beanName1, beanName2};
-        assertArrayEquals(expected, actual);
+        //Set<String> expected = new HashSet<>(Arrays.asList(beanName1, beanName2));
+        Set<String> expected = new HashSet<String>() {
+            {
+                add(beanName1);
+                add(beanName2);
+            }
+        };
+        assertEquals(expected, actual);
     }
 
     @Test
     public void getBeanWithOneBeanDefinitionIsNotNull() throws Exception {
         String beanName = "First bean";
-        List<String> beanDescriptions = Arrays.asList(beanName);
+        //List<String> beanDescriptions = Arrays.asList(beanName);
+        beanDescriptions.put(beanName, TestBean.class);
         Config config = new JavaMapConfig( beanDescriptions);
         Context context = new ApplicationContext(config);
 
@@ -83,7 +104,6 @@ public class ApplicationContextTest {
         String beanName = "First bean";
         Class<TestBean> beanType = TestBean.class;
 
-        //TODO  replace list woth map
         //List<String> beanDescriptions = Arrays.asList(beanName);
         Map<String, Class<?>> beanDescriptions = new HashMap<String, Class<?>>(){{
             put(beanName, beanType);
@@ -96,6 +116,11 @@ public class ApplicationContextTest {
 
 
         assertNotNull(bean);
+    }
+
+    public static class TestBean {
+        public TestBean() {
+        }
     }
 
 }

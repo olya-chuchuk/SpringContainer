@@ -2,6 +2,7 @@ package ua.rd.ioc;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class ApplicationContext implements Context {
     private BeanDefinition[] beanDefinitions;
@@ -15,15 +16,16 @@ public class ApplicationContext implements Context {
     }
 
     @Override
-    public Object getBean(String beanName) {
+    public Object getBean(String beanName) throws IllegalAccessException, InstantiationException {
         List<BeanDefinition> beanDefinitions =
                 Arrays.asList(this.beanDefinitions);
-        if (beanDefinitions.stream().map(BeanDefinition::getBeanName).anyMatch(n -> n.equals(beanName))) {
+        Optional<BeanDefinition> requestedBean =
+                beanDefinitions.stream().filter((b) -> beanName.equals(b.getBeanName())).findFirst();
+        if (requestedBean.isPresent()) {
 
-            //TODO найти бин с именем и для него через рефлекшн создать бин с таким имененем
-            return new Object();
-            //BeanDefinition beanDefinition;
-            //return beanDefinition.getBeanType().newInstance();
+            Class<?> beanType = requestedBean.get().getBeanType();
+            System.out.println(beanType);
+            return beanType.newInstance();
         } else {
             throw new NoSuchBeanDefinitionException();
         }
