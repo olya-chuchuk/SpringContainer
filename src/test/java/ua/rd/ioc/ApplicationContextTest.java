@@ -9,7 +9,7 @@ import java.util.*;
 import static org.junit.Assert.*;
 
 public class ApplicationContextTest {
-    private Map<String, Class<?>> beanDescriptions;
+    private Map<String, Map<String, Object>> beanDescriptions;
 
     @Before
     public void init() {
@@ -41,8 +41,11 @@ public class ApplicationContextTest {
     @Test
     public void getBeanDefinitionNamesWithOneBeanDefinition() throws Exception {
         String beanName = "FirstBean";
-        //List<String> beanDescriptions = Arrays.asList(beanName);
-        beanDescriptions.put(beanName, TestBean.class);
+        beanDescriptions.put(beanName,
+                new HashMap<String, Object>() {
+                    {
+                        put("type", TestBean.class);
+                    }});
         Config config = new JavaMapConfig(beanDescriptions);
         Context context = new ApplicationContext(config);
 
@@ -68,9 +71,16 @@ public class ApplicationContextTest {
     public void getBeanDefinitionNamesWithSeveralBeanDefinitions() throws Exception {
         String beanName1 = "First bean";
         String beanName2 = "Second bean";
-        //List<String> beanDescriptions = Arrays.asList(beanName1, beanName2);
-        beanDescriptions.put(beanName1, TestBean.class);
-        beanDescriptions.put(beanName2, TestBean.class);
+        beanDescriptions.put(beanName1,
+                new HashMap<String, Object>() {
+                    {
+                        put("type", TestBean.class);
+                    }});
+        beanDescriptions.put(beanName2,
+                new HashMap<String, Object>() {
+                    {
+                        put("type", TestBean.class);
+                    }});
         Config config = new JavaMapConfig( beanDescriptions);
         Context context = new ApplicationContext(config);
 
@@ -89,8 +99,11 @@ public class ApplicationContextTest {
     @Test
     public void getBeanWithOneBeanDefinitionIsNotNull() throws Exception {
         String beanName = "First bean";
-        //List<String> beanDescriptions = Arrays.asList(beanName);
-        beanDescriptions.put(beanName, TestBean.class);
+        beanDescriptions.put(beanName,
+                new HashMap<String, Object>() {
+                    {
+                        put("type", TestBean.class);
+                    }});
         Config config = new JavaMapConfig( beanDescriptions);
         Context context = new ApplicationContext(config);
 
@@ -104,10 +117,11 @@ public class ApplicationContextTest {
         String beanName = "First bean";
         Class<TestBean> beanType = TestBean.class;
 
-        //List<String> beanDescriptions = Arrays.asList(beanName);
-        Map<String, Class<?>> beanDescriptions = new HashMap<String, Class<?>>(){{
-            put(beanName, beanType);
-        }};
+        beanDescriptions.put(beanName,
+                new HashMap<String, Object>() {{
+                    put("type", beanType);
+                }}
+        );
 
         Config config = new JavaMapConfig(beanDescriptions);
         Context context = new ApplicationContext(config);
@@ -116,6 +130,73 @@ public class ApplicationContextTest {
 
 
         assertNotNull(bean);
+    }
+
+    @Test
+    public void getBeanIsSingletonByDefault() throws Exception {
+        String beanName = "First bean";
+        Class<TestBean> beanType = TestBean.class;
+
+        beanDescriptions.put(beanName,
+                new HashMap<String, Object>() {{
+                    put("type", beanType);
+                }}
+        );
+
+        Config config = new JavaMapConfig(beanDescriptions);
+        Context context = new ApplicationContext(config);
+
+        TestBean bean1 = (TestBean) context.getBean(beanName);
+        TestBean bean2 = (TestBean) context.getBean(beanName);
+
+        assertSame(bean1, bean2);
+    }
+
+    @Test
+    public void getBeanNotSameInstancesWithSameType() throws Exception {
+        String beanName1 = "First bean";
+        String beanName2 = "Second bean";
+        beanDescriptions.put(beanName1,
+                new HashMap<String, Object>() {
+                    {
+                        put("type", TestBean.class);
+                    }});
+        beanDescriptions.put(beanName2,
+                new HashMap<String, Object>() {
+                    {
+                        put("type", TestBean.class);
+                    }});
+        Config config = new JavaMapConfig( beanDescriptions);
+        Context context = new ApplicationContext(config);
+
+
+
+        TestBean bean1 = (TestBean) context.getBean(beanName1);
+        TestBean bean2 = (TestBean) context.getBean(beanName2);
+
+        assertNotSame(bean1, bean2);
+    }
+
+
+    @Test
+    public void getBeanIsPrototype() throws Exception {
+        String beanName = "First bean";
+        Class<TestBean> beanType = TestBean.class;
+
+        beanDescriptions.put(beanName,
+                new HashMap<String, Object>() {{
+                    put("type", beanType);
+                    put("isPrototype", true);
+                }}
+        );
+
+        Config config = new JavaMapConfig(beanDescriptions);
+        Context context = new ApplicationContext(config);
+
+        TestBean bean1 = (TestBean) context.getBean(beanName);
+        TestBean bean2 = (TestBean) context.getBean(beanName);
+
+        assertNotSame(bean1, bean2);
     }
 
     static class TestBean {

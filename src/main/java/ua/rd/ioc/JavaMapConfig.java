@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class JavaMapConfig implements Config {
 
-    private Map<String, Class<?>> beanDescriptions;
+    private Map<String, Map<String, Object>> beanDescriptions;
 
-    public JavaMapConfig(Map<String, Class<?>> beanDescriptions) {
+    public JavaMapConfig(Map<String, Map<String, Object>> beanDescriptions) {
         this.beanDescriptions = beanDescriptions;
     }
 
@@ -15,22 +15,15 @@ public class JavaMapConfig implements Config {
     public BeanDefinition[] beanDefinitions() {
         BeanDefinition[] beanDefinitions =
                 beanDescriptions.entrySet().stream()
-                        .map((e) -> getBeanDefinition(e.getKey(), e.getValue()))
+                        .map((e) -> getBeanDefinition(e))
                         .toArray(BeanDefinition[]::new);
         return beanDefinitions;
     }
 
-    private BeanDefinition getBeanDefinition(String name, Class<?> type) {
-        return new BeanDefinition() {
-            @Override
-            public String getBeanName() {
-                return name;
-            }
+    private BeanDefinition getBeanDefinition(Map.Entry<String, Map<String, Object>> descriptionEntry) {
 
-            @Override
-            public Class<?> getBeanType() {
-                return type;
-            }
-        };
+        return new SimpleBeanDefinition(descriptionEntry.getKey(),
+                (Class<?>) descriptionEntry.getValue().get("type"),
+                (boolean) descriptionEntry.getValue().getOrDefault("isPrototype", false));
     }
 }
