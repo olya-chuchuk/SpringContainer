@@ -1,5 +1,7 @@
 package ua.rd.ioc;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class ApplicationContext implements Context {
@@ -17,10 +19,10 @@ public class ApplicationContext implements Context {
     }
 
     @Override
-    public Object getBean(String beanName) throws IllegalAccessException, InstantiationException {
-        BeanDefinition beanDefinition = getBeanDefinitionByName(beanName);
+    public Object getBean(String beanName) {
         Object bean = beans.get(beanName);
         if(bean == null) {
+            BeanDefinition beanDefinition = getBeanDefinitionByName(beanName);
             bean = createNewBean(beanDefinition);
             if(!beanDefinition.isPrototype()) {
                 beans.put(beanName, bean);
@@ -41,10 +43,39 @@ public class ApplicationContext implements Context {
     }
 
     private Object createObject(BeanDefinition bd) {
+        Class<?> type = bd.getBeanType();
+        Object newBean;
+        if(type.getDeclaredConstructors()[0].getParameterCount() == 0) {
+            newBean =  createBeanWithDefaultConstructor(type);
+        } else {
+            newBean = createBeanWithParams(type);
+        }
+        return newBean;
+    }
+
+    private Object createBeanWithDefaultConstructor(Class<?> type) {
         try {
-            return bd.getBeanType().newInstance();
+            return type.newInstance();
         } catch (Exception e) {
             throw new IllegalArgumentException();
+        }
+    }
+
+    private Object createBeanWithParams(Class<?> type) {
+        Constructor<?> constructor = type.getDeclaredConstructors()[0];
+        Class<?>[] parameterTypes = constructor.getParameterTypes();
+        Object[] params = new Object[parameterTypes.length];
+        for(int i = 0; i < parameterTypes.length; ++i) {
+            Class<?> paramType = parameterTypes[i];
+            String paramTypeName = paramType.getSimpleName();
+            Object param = getBean(Character.toLowerCase(paramTypeName.charAt(0))
+                    + paramTypeName.substring(1));
+            params[i] = param;
+        }
+        try {
+            return constructor.newInstance(params);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
