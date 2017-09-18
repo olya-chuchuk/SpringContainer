@@ -22,4 +22,13 @@ public class Tweet {
         this.text = text;
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Tweet{" +
+                "tweetId=" + tweetId +
+                ", text='" + text + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

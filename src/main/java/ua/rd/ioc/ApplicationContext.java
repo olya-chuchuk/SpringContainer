@@ -1,10 +1,10 @@
 package ua.rd.ioc;
 
-import java.lang.reflect.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class ApplicationContext implements Context {
@@ -28,17 +28,18 @@ public class ApplicationContext implements Context {
 
     @Override
     public Object getBean(String beanName) {
-        Object bean = beans.get(beanName);
-        if(bean == null) {
-            BeanDefinition beanDefinition = getBeanDefinitionByName(beanName);
-            bean = createNewBean(beanDefinition);
-            if(!beanDefinition.isPrototype()) {
-                beans.put(beanName, bean);
-            }
+        return Optional.ofNullable(beans.get(beanName))
+                .orElseGet(() -> createBeanByBeanName(beanName));
+    }
+
+    private Object createBeanByBeanName(String beanName) {
+        BeanDefinition beanDefinition = getBeanDefinitionByName(beanName);
+        Object bean = createNewBean(beanDefinition);
+        if(!beanDefinition.isPrototype()) {
+            beans.put(beanName, bean);
         }
         return bean;
     }
-
 
 
     private Object createNewBean(BeanDefinition beanDefinition) {
@@ -97,12 +98,12 @@ public class ApplicationContext implements Context {
 
 
         private void createBenchmarkProxy() {
-            Object newBean = bean;
+            Object originalBean = bean;
             if(Stream.of(bean.getClass().getDeclaredMethods())
                     .anyMatch(m -> m.isAnnotationPresent(Benchmark.class) &&
                             m.getAnnotation(Benchmark.class).enable())) {
                 Class<?> beanType = bean.getClass();
-                bean =  Proxy.newProxyInstance(beanType.getClassLoader(),
+                bean = Proxy.newProxyInstance(beanType.getClassLoader(),
                         beanType.getInterfaces(),
                         (proxy, method, args) -> {
                             Method beanMethod = beanType.getDeclaredMethod(method.getName(),
@@ -110,12 +111,12 @@ public class ApplicationContext implements Context {
                             if (beanMethod.isAnnotationPresent(Benchmark.class) &&
                                     beanMethod.getAnnotation(Benchmark.class).enable()) {
                                 long start = System.nanoTime();
-                                Object objectToReturn = method.invoke(newBean, args);
+                                Object objectToReturn = method.invoke(originalBean, args);
                                 long finish = System.nanoTime();
                                 System.out.println(finish - start);
                                 return objectToReturn;
                             } else {
-                                return method.invoke(newBean, args);
+                                return method.invoke(originalBean, args);
                             }
                         });
             }

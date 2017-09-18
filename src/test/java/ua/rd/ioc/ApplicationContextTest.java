@@ -360,12 +360,14 @@ public class ApplicationContextTest {
 
         BenchmarkInterface bean = (BenchmarkInterface) context.getBean("testBeanBenchmark");
 
-        //// TODO: 9/13/2017 add sout check
-        bean.methodToBenchmark("abc");
+        System.out.println(bean.methodToBenchmark("abc"));
+        bean.methodNoBenchmark();
     }
 
+
     public interface BenchmarkInterface {
-        public String methodToBenchmark(String str);
+        String methodToBenchmark(String str);
+        void methodNoBenchmark();
     }
 
     static class TestBeanBenchmark implements BenchmarkInterface {
@@ -373,6 +375,12 @@ public class ApplicationContextTest {
         @Override
         public String methodToBenchmark(String str) {
             return new StringBuilder(str).reverse().toString();
+        }
+
+        @Override
+        @Benchmark(enable = false)
+        public void methodNoBenchmark() {
+            System.out.println("No benchmark");
         }
     }
 
