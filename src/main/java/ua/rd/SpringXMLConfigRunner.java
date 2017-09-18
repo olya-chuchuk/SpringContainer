@@ -14,7 +14,11 @@ public class SpringXMLConfigRunner {
 
         System.out.println(repoContext.getBean("tweet"));
         System.out.println(serviceContext.getBean("tweet"));
-        System.out.println(serviceContext.getBean("tweetParentgti"));
+        System.out.println(serviceContext.getBean("us"));
+        System.out.println(serviceContext.getBean("tw"));
+
+        System.out.println(serviceContext.getBean("tweetService") ==
+                                serviceContext.getBean("tweetService"));
 
         serviceContext.close();
         repoContext.close();

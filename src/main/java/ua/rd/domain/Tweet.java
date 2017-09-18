@@ -23,6 +23,14 @@ public class Tweet {
         this.user = user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void init() {
+        user.setTweet(this);
+    }
+
     @Override
     public String toString() {
         return "Tweet{" +

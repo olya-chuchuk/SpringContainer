@@ -14,8 +14,11 @@ public class SimpleTweetService implements TweetService {
     private TweetRepository tweetRepository;
     private Tweet tweet;
 
-    public SimpleTweetService(TweetRepository tweetRepository, Tweet tweet) {
+    public void setTweet(Tweet tweet) {
         this.tweet = tweet;
+    }
+
+    public SimpleTweetService(TweetRepository tweetRepository) {
         this.tweetRepository = tweetRepository;
     }
 
@@ -23,5 +26,10 @@ public class SimpleTweetService implements TweetService {
     @Override
     public Iterable<Tweet> allTweets() {
         return tweetRepository.allTweets();
+    }
+
+    @Override
+    public Tweet newTweet() {
+        return new Tweet();
     }
 }
