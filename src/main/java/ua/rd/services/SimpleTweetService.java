@@ -1,5 +1,8 @@
 package ua.rd.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Lookup;
+import org.springframework.beans.factory.annotation.Required;
 import ua.rd.domain.Tweet;
 import ua.rd.repository.TweetRepository;
 
@@ -11,9 +14,18 @@ import ua.rd.repository.TweetRepository;
 
 public class SimpleTweetService implements TweetService {
 
+//    @Autowired
     private TweetRepository tweetRepository;
     private Tweet tweet;
 
+    @Autowired
+    public void fill(TweetRepository tweetRepository, Tweet tweet) {
+        this.tweetRepository = tweetRepository;
+        this.tweet = tweet;
+    }
+
+    @Required
+    @Autowired
     public void setTweet(Tweet tweet) {
         this.tweet = tweet;
     }
@@ -29,6 +41,7 @@ public class SimpleTweetService implements TweetService {
     }
 
     @Override
+    @Lookup
     public Tweet newTweet() {
         return new Tweet();
     }

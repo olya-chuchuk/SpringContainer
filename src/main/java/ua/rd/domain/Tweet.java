@@ -3,6 +3,7 @@ package ua.rd.domain;
 /**
  * Created by Olha_Chuchuk on 9/11/2017.
  */
+//@MyTweet("abc")
 public class Tweet {
 
     private Long tweetId;
@@ -23,6 +24,7 @@ public class Tweet {
         this.user = user;
     }
 
+    //@Value("user")
     public void setUser(User user) {
         this.user = user;
     }

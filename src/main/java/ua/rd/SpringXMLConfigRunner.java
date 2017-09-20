@@ -2,6 +2,9 @@ package ua.rd;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ua.rd.domain.Tweet;
+
+import java.util.Arrays;
 
 /**
  * Created by Olha_Chuchuk on 9/15/2017.
@@ -12,13 +15,12 @@ public class SpringXMLConfigRunner {
         ConfigurableApplicationContext serviceContext = new ClassPathXmlApplicationContext(
                 new String[] {"serviceContext.xml"}, repoContext);
 
-        System.out.println(repoContext.getBean("tweet"));
-        System.out.println(serviceContext.getBean("tweet"));
-        System.out.println(serviceContext.getBean("us"));
-        System.out.println(serviceContext.getBean("tw"));
 
-        System.out.println(serviceContext.getBean("tweetService") ==
-                                serviceContext.getBean("tweetService"));
+        Arrays.stream(serviceContext.getBeanDefinitionNames()).forEach(System.out::println);
+
+        System.out.println(serviceContext.getBean(Tweet.class));
+
+        //System.out.println(serviceContext.getBean("abc") == serviceContext.getBean("abc"));
 
         serviceContext.close();
         repoContext.close();

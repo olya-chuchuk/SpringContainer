@@ -70,7 +70,10 @@ public class ApplicationContext implements Context {
 
         private void createNewBeanInstance() {
             Class<?> type = beanDefinition.getBeanType();
-            if(type.getDeclaredConstructors()[0].getParameterCount() == 0) {
+//            System.out.println(type.getName());
+//            System.out.println(type.getDeclaredConstructors());
+            if(Arrays.stream(type.getDeclaredConstructors()).anyMatch(t -> t.getParameterCount() == 0)) {
+//            if(type.getDeclaredConstructors()[0].getParameterCount() == 0) {
                 bean =  createBeanWithDefaultConstructor(type);
             } else {
                 bean = createBeanWithParams(type);
@@ -137,6 +140,7 @@ public class ApplicationContext implements Context {
     }
 
     private BeanDefinition getBeanDefinitionByName(String beanName) {
+        System.out.println(beanName);
         return beanDefinitions.stream().filter((b) -> beanName.equals(b.getBeanName()))
                 .findAny().orElseThrow(NoSuchBeanDefinitionException::new);
     }
