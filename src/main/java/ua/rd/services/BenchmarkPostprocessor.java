@@ -9,12 +9,12 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 public class BenchmarkPostprocessor implements BeanPostProcessor{
     @Override
     public Object postProcessBeforeInitialization(Object o, String s) throws BeansException {
+        System.out.println(o.getClass() + " " +  s);
         return o;
     }
 
     @Override
     public Object postProcessAfterInitialization(Object o, String s) throws BeansException {
-        System.out.println("pp");
         return o;
     }
 }

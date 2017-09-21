@@ -16,9 +16,9 @@ public class TweetBFPP implements BeanFactoryPostProcessor{
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory)
             throws BeansException {
         BeanDefinition bd = beanFactory.getBeanDefinition("tweet");
-        bd.setScope("singleton");
+       // bd.setScope("singleton");
         MutablePropertyValues values = bd.getPropertyValues();
-        System.out.println(values);
+        //System.out.println(values);
         PropertyValue user = values.getPropertyValue("user");
         user.setConvertedValue(new User(user.getValue().toString()));
     }
