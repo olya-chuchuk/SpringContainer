@@ -2,7 +2,6 @@ package ua.rd;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ua.rd.services.SimpleTweetService;
 import ua.rd.services.TweetService;
 
 /**
@@ -13,9 +12,8 @@ public class SpringXMLConfigRunner {
         ConfigurableApplicationContext repoContext = new ClassPathXmlApplicationContext("repoContext.xml");
         ConfigurableApplicationContext serviceContext = new ClassPathXmlApplicationContext(
                 new String[] {"serviceContext.xml"}, repoContext);
-
-        TweetService tweetService = serviceContext.getBean(SimpleTweetService.class);
-        System.out.println(tweetService.newTweet() == tweetService.newTweet());
+        TweetService tweetService = serviceContext.getBean(TweetService.class);
+        tweetService.newTweet();
 
         serviceContext.close();
         repoContext.close();

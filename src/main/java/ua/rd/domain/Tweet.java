@@ -1,9 +1,12 @@
 package ua.rd.domain;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Created by Olha_Chuchuk on 9/11/2017.
  */
 //@MyTweet("abc")
+    @Component
 public class Tweet {
 
     private Long tweetId;
@@ -27,6 +30,10 @@ public class Tweet {
     //@Value("user")
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public void init() {
