@@ -3,7 +3,10 @@ package ua.rd;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ua.rd.domain.Tweet;
+import ua.rd.domain.User;
 import ua.rd.services.TweetService;
+
+import java.util.List;
 
 /**
  * Created by Olha_Chuchuk on 9/22/2017.
@@ -16,12 +19,20 @@ public class JavaBasedConfigRunner {
                 new AnnotationConfigApplicationContext();
         context.setParent(repoContext);
         context.register(ServiceConfig.class);
-        context.getEnvironment().setActiveProfiles("dev", "test");
+        //context.getEnvironment().setActiveProfiles("dev", "test");
         context.refresh();
 
-        TweetService tweetService = context.getBean(TweetService.class);
+        TweetService service = context.getBean(TweetService.class);
 
-        System.out.println(tweetService.newTweet() == tweetService.newTweet());
-        System.out.println(context.getBean(Tweet.class));
+
+        String userName = "Test user name";
+        String txt = "Test text";
+        service.createNewUser(userName);
+        User user = service.getUserByName(userName).get();
+        service.tweet(user, txt);
+
+        List<Tweet> tweets = service.userProfile(userName);
+
+        System.out.println(tweets);
     }
 }

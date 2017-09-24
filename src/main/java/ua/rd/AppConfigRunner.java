@@ -25,7 +25,7 @@ public class AppConfigRunner {
    // @Scope("prototype")
     public Tweet tweet() {
         System.out.println("Method tweet() called");
-        return new Tweet();
+        return new Tweet(null, null);
     }
 
     public static void main(String[] args) {
@@ -49,7 +49,7 @@ public class AppConfigRunner {
     @Lazy
     public User user(Tweet tweet) {
         User user = new User("Olya");
-        user.setTweet(tweet());
+        //user.setTweet(tweet());
         return user;
     }
 }
