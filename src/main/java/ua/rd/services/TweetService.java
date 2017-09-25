@@ -21,7 +21,11 @@ public interface TweetService {
 
     void init();
 
-    void tweet(User user, String txt);
+    Tweet tweet(User user, String txt);
 
     List<Tweet> userProfile(String userName);
+
+    void likeTweet(Tweet tweet);
+
+    long getLikesCount(Long id);
 }

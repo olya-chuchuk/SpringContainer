@@ -1,6 +1,5 @@
 package ua.rd.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
@@ -48,14 +47,26 @@ public class SimpleTweetService implements TweetService {
     }
 
     @Override
-    public void tweet(User user, String txt) {
+    public Tweet tweet(User user, String txt) {
         Tweet tweet = tweetRepository.createAndRegisterNewTweet(user, txt);
         user.addTweet(tweet);
+        return tweet;
     }
 
     @Override
     public List<Tweet> userProfile(String userName) {
         return tweetRepository.getUserProfile(userName);
+    }
+
+    @Override
+    public void likeTweet(Tweet tweet) {
+        tweet.like();
+    }
+
+    @Override
+    public long getLikesCount(Long id) {
+        Tweet tweet = tweetRepository.getTweetById(id).orElseThrow(NoSuchTweetException::new);
+        return tweet.getLikesCount();
     }
 
 

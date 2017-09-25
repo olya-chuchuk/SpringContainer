@@ -42,4 +42,13 @@ public class SimpleTweetServiceTest {
         assertTrue(tweets.get(0).getUser() == user);
     }
 
+    @Test
+    public void likeTweetTest() {
+        User user = service.createNewUser("Test username");
+        Tweet tweet = service.tweet(user, "Test text");
+        service.likeTweet(tweet);
+
+        assertEquals(service.getLikesCount(tweet.getId()), 1L);
+    }
+
 }

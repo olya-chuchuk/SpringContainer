@@ -2,8 +2,6 @@ package ua.rd.repository;
 
 import ua.rd.domain.Tweet;
 import ua.rd.domain.User;
-import ua.rd.services.SimpleTweetService;
-import ua.rd.services.TweetService;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,4 +22,6 @@ public interface TweetRepository {
     Tweet createAndRegisterNewTweet(User user, String txt);
 
     List<Tweet> getUserProfile(String userName);
+
+    Optional<Tweet> getTweetById(Long id);
 }

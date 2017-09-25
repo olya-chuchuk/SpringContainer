@@ -3,11 +3,12 @@ package ua.rd.repository;
 import org.springframework.stereotype.Repository;
 import ua.rd.domain.Tweet;
 import ua.rd.domain.User;
-import ua.rd.services.SimpleTweetService;
-import ua.rd.services.TweetService;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by Olha_Chuchuk on 9/11/2017.
@@ -63,6 +64,11 @@ public class InMemTweetRepository implements TweetRepository {
     public List<Tweet> getUserProfile(String userName) {
         User user = getUserByName(userName).orElseThrow(NoUserWithSuchNameException::new);
         return user.getAllTweets();
+    }
+
+    @Override
+    public Optional<Tweet> getTweetById(Long id) {
+        return Optional.ofNullable(tweets.get(id));
     }
 
 
