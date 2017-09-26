@@ -23,8 +23,6 @@ public class BenchmarkPostprocessor implements BeanPostProcessor{
                 Arrays.stream(superClass.getDeclaredMethods())
                         .anyMatch(m -> m.isAnnotationPresent(Benchmark.class) &&
                                 m.getAnnotation(Benchmark.class).enable())) {
-            System.out.println("creating proxy");
-
             return createBenchmarkProxy(o);
         }
         return o;
@@ -40,6 +38,9 @@ public class BenchmarkPostprocessor implements BeanPostProcessor{
             return Proxy.newProxyInstance(beanType.getClassLoader(),
                     ClassUtils.getAllInterfaces(bean),
                     (proxy, method, args) -> {
+                        System.out.println(method.getName());
+                        System.out.println(beanType);
+                        System.out.println(Arrays.toString(beanType.getDeclaredMethods()));
                         Method beanMethod = beanType.getDeclaredMethod(method.getName(),
                                 method.getParameterTypes());
                         if (beanMethod.isAnnotationPresent(Benchmark.class) &&

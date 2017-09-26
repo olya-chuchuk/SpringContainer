@@ -13,7 +13,7 @@ public interface TweetService {
 
     Iterable<Tweet> allTweets();
 
-    Tweet newTweet();
+    Tweet newTweet(String text, User user);
 
     User createNewUser(String userName);
 

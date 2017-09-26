@@ -42,8 +42,8 @@ public class ServiceConfig {
     public TweetService tweetService(TweetRepository tweetRepository) {
         return new SimpleTweetService(tweetRepository) {
             @Override
-            public Tweet newTweet() {
-                return new Tweet(null, null);
+            public Tweet newTweet(String text, User user) {
+                return new Tweet(text, user);
             }
         };
     }

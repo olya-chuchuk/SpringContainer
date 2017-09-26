@@ -32,7 +32,7 @@ public class SimpleTweetService implements TweetService {
         this.tweet = tweet;
     }
 
-    @Required
+    //@Required
     //@Autowired
     public void setTweet(Tweet tweet) {
         this.tweet = tweet;
@@ -77,8 +77,8 @@ public class SimpleTweetService implements TweetService {
 
     @Override
     @Lookup
-    @Benchmark
-    public Tweet newTweet() {
+    //@Benchmark
+    public Tweet newTweet(String text, User user) {
         return tweet;
     }
 

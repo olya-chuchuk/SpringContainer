@@ -13,15 +13,15 @@
         <context:include-filter type="annotation" expression="ua.rd.domain.MyTweet"/>
     </context:component-scan>
 
-    <bean class="ua.rd.services.BenchmarkPostprocessor"/>
+    <!--<bean class="ua.rd.services.BenchmarkPostprocessor"/>-->
     <!--<bean class="ua.rd.services.TweetBFPP"/>-->
 
     <!--<bean name="tweetService" class="ua.rd.services.SimpleTweetService"/>-->
 
 
-    <bean name="tweet" class="ua.rd.domain.Tweet" scope="prototype">
-        <property name="user" value="DefaultUserName"/>
-    </bean>
+    <!--<bean name="tweet" class="ua.rd.domain.Tweet" scope="prototype">-->
+        <!--<property name="user" value="DefaultUserName"/>-->
+    <!--</bean>-->
 
     <!--<bean name="us" class="ua.rd.domain.User">-->
         <!--<constructor-arg>-->

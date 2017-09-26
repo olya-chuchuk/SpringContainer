@@ -34,5 +34,8 @@ public class JavaBasedConfigRunner {
         List<Tweet> tweets = service.userProfile(userName);
 
         System.out.println(tweets);
+
+        context.close();
+        repoContext.close();
     }
 }

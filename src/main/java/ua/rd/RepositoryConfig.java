@@ -15,14 +15,12 @@ public class RepositoryConfig {
     @Bean
     @Scope("prototype")
     //@Profile("default")
-    @Lazy
     public Tweet tweet(String text, User user) {
         return new Tweet(text, user);
     }
 
     @Bean
     @Scope("prototype")
-    @Lazy
     public User user(String name) {
         return new User(name);
     }
