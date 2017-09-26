@@ -20,8 +20,8 @@ import java.util.regex.Pattern;
 public final class Tweet {
 
     private RawTweet rawTweet;
-    private Long likes;
-    private Long retweets;
+    private long likes;
+    private long retweets;
 
     public Tweet(String text, User user) {
         this(text, user, null);
@@ -41,7 +41,7 @@ public final class Tweet {
         return rawTweet.getUser();
     }
 
-    public Long getLikesCount() {
+    public long getLikesCount() {
         return likes;
     }
 
@@ -61,11 +61,11 @@ public final class Tweet {
         retweets++;
     }
 
-    public Long getRetweetCount() {
+    public long getRetweetCount() {
         return retweets;
     }
 
-    public Long getId() {
+    public long getId() {
         return rawTweet.getId();
     }
 

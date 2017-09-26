@@ -11,21 +11,15 @@ import java.util.Optional;
  */
 public interface TweetService {
 
-    Iterable<Tweet> allTweets();
+    void createNewUser(String userName);
 
-    Tweet newTweet(String text, User user);
+    long tweet(String userName, String txt);
 
-    User createNewUser(String userName);
+    String userProfile(String userName);
 
-    Optional<User> getUserByName(String userName);
+    void likeTweet(long tweetId);
 
-    void init();
+    long getLikesCount(long tweetId);
 
-    Tweet tweet(User user, String txt);
-
-    List<Tweet> userProfile(String userName);
-
-    void likeTweet(Tweet tweet);
-
-    long getLikesCount(Long id);
+    boolean doesUserExist(String userName);
 }

@@ -3,8 +3,12 @@ package ua.rd.services;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ua.rd.RepositoryConfig;
+import ua.rd.ServiceConfig;
 import ua.rd.domain.Tweet;
 import ua.rd.domain.User;
+import ua.rd.ioc.ApplicationContext;
 import ua.rd.repository.InMemTweetRepository;
 
 import java.util.List;
@@ -19,7 +23,9 @@ public class SimpleTweetServiceTest {
 
     @Before
     public void init() {
-        service = new SimpleTweetService(new InMemTweetRepository());
+        AnnotationConfigApplicationContext context =
+        new AnnotationConfigApplicationContext(RepositoryConfig.class, ServiceConfig.class);
+        service = context.getBean(TweetService.class);
     }
 
     @After
@@ -32,23 +38,24 @@ public class SimpleTweetServiceTest {
         String userName = "Test user name";
         String txt = "Test text";
         service.createNewUser(userName);
-        User user = service.getUserByName(userName).get();
-        service.tweet(user, txt);
+        service.tweet(userName, txt);
 
-        List<Tweet> tweets = service.userProfile(userName);
+        String tweets = service.userProfile(userName);
 
-        assertEquals(tweets.size(), 1);
-        assertEquals(tweets.get(0).getText(), txt);
-        assertTrue(tweets.get(0).getUser() == user);
+        String expected = "Tweets: " +
+                "[Tweet{rawTweet=RawTweet{tweetId=0, text='Test text', user=Test user name, " +
+                "mentions=[], repliesTo=null}, " +
+                "likes=0, retweets=0}] " +
+                "Retweets: []";
+        assertEquals(expected, tweets);
     }
 
     @Test
     public void likeTweetTest() {
-        User user = service.createNewUser("Test username");
-        Tweet tweet = service.tweet(user, "Test text");
-        service.likeTweet(tweet);
-
-        assertEquals(service.getLikesCount(tweet.getId()), 1L);
+        String userName = "Test username";
+        service.createNewUser(userName);
+        long tweetId = service.tweet(userName, "Test text");
+        service.likeTweet(tweetId);
     }
 
 }

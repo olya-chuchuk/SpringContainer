@@ -34,11 +34,7 @@ public class IoCRunner {
         Config config = new JavaMapConfig(beanDescriptions);
         Context context = new ApplicationContext(config);
         TweetService tweetService = (TweetService) context.getBean("tweetService");
-//        TweetService tweetService = (TweetService) context.getBean("tweetService");
 
-        System.out.println(tweetService.newTweet("Text", null) == tweetService.newTweet("Text", null));
-//        System.out.println(tweetRepository.allTweets());
-//        System.out.println(tweetService.allTweets());
     }
 
 }

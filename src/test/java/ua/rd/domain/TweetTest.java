@@ -39,7 +39,7 @@ public class TweetTest {
 
         assertEquals(tweet.getText(), txt);
         assertEquals(tweet.getUser(), user);
-        assertEquals(tweet.getLikesCount(), new Long(0));
+        assertEquals(tweet.getLikesCount(), 0L);
         assertFalse(tweet.getRepliesTo().isPresent());
         assertTrue(tweet.getMentions().isEmpty());
     }
@@ -53,7 +53,7 @@ public class TweetTest {
             tweet.like();
         }
 
-        assertEquals(tweet.getLikesCount(), new Long(3));
+        assertEquals(tweet.getLikesCount(), 3);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class TweetTest {
             tweet.retweet();
         }
 
-        assertEquals(tweet.getRetweetCount(), new Long(3));
+        assertEquals(tweet.getRetweetCount(), 3);
     }
 
     @Test

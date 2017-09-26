@@ -5,16 +5,13 @@ import org.springframework.stereotype.Repository;
 import ua.rd.domain.Tweet;
 import ua.rd.domain.User;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Created by Olha_Chuchuk on 9/11/2017.
  */
-@Repository("tweetRepository")
+@Repository
 public class InMemTweetRepository implements TweetRepository {
 
     private Map<Long, Tweet> tweets;
@@ -24,60 +21,94 @@ public class InMemTweetRepository implements TweetRepository {
         tweets = new HashMap<>();
         users = new HashMap<>();
     }
-    @PostConstruct
-    public void init() {
-//        tweets = Arrays.asList(new Tweet(1L, "First Mesg", null));
-//        tweets = Arrays.asList(new Tweet(2L, "Second Mesg", null));
-    }
 
     @Override
-    public Iterable<Tweet> allTweets() {
-        return tweets.values();
-    }
-
-    @Override
-    public User createNewUser(String userName) {
+    public void createNewUser(String userName) {
         if(!users.containsKey(userName)) {
             users.put(userName, getNewUser(userName));
         }
-        return users.get(userName);
+    }
+
+    /**
+     * Shows String representation of all tweets tweeted by this user and all retweeted tweets
+     * @param userName
+     * @return
+     * @throws NoSuchUserException if user with userName does not exist
+     */
+    @Override
+    public String getUserProfile(String userName){
+        if(!users.containsKey(userName)) {
+            throw new NoSuchUserException();
+        }
+        User user = users.get(userName);
+        String profile =
+                "Tweets: "
+                + user.getAllTweets().toString()
+                + " Retweets: "
+                + user.getAllRetweets().toString();
+        return profile;
     }
 
     @Override
-    public Optional<User> getUserByName(String userName) {
-        return Optional.ofNullable(users.get(userName));
+    public long getLikesCount(long tweetId) {
+        if(!tweets.containsKey(tweetId)) {
+            throw new NoSuchTweetException();
+        }
+        return tweets.get(tweetId).getLikesCount();
     }
 
+    /**
+     * Creates new tweet of text txt from user userName
+     * Returns id of newly created tweet
+     * @param userName
+     * @param txt
+     * @return
+     */
     @Override
-    @Lookup("user")
-    public User getNewUser(String userName) {
-        //TODO replace by lookup method in configuration
-        return null;
-    }
-
-    @Override
-    public Tweet createAndRegisterNewTweet(User user, String txt) {
+    public long tweet(String userName, String txt) {
+        if(!users.containsKey(userName)) {
+            throw new NoSuchUserException();
+        }
+        User user = users.get(userName);
         Tweet newTweet = getNewTweet(txt, user);
-        tweets.put(newTweet.getId(), newTweet);
-        return newTweet;
+        user.addTweet(newTweet);
+        return newTweet.getId();
     }
 
     @Override
-    public List<Tweet> getUserProfile(String userName) {
-        User user = getUserByName(userName).orElseThrow(NoUserWithSuchNameException::new);
-        return user.getAllTweets();
+    public void retweet(String userName, long tweetId) {
+        if(!users.containsKey(userName)) {
+            throw new NoSuchUserException();
+        }
+        if(!tweets.containsKey(tweetId)) {
+            throw new NoSuchTweetException();
+        }
+        User user = users.get(userName);
+        Tweet tweet = tweets.get(tweetId);
+        user.addRetweet(tweet);
     }
 
     @Override
-    public Optional<Tweet> getTweetById(Long id) {
-        return Optional.ofNullable(tweets.get(id));
+    public boolean doesUserExist(String userName) {
+        return users.containsKey(userName);
     }
 
     @Override
-    @Lookup()
-    public Tweet getNewTweet(String txt, User user) {
-        //TODO replace by lookup method in configuration
+    public void likeTweet(long tweetId) {
+        if(!tweets.containsKey(tweetId)) {
+            throw new NoSuchTweetException();
+        }
+        Tweet tweet = tweets.get(tweetId);
+        tweet.like();
+    }
+
+    @Lookup
+    protected Tweet getNewTweet(String txt, User user) {
         return null;
     }
 
+    @Lookup
+    protected User getNewUser(String userName) {
+        return null;
+    }
 }

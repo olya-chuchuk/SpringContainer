@@ -12,19 +12,17 @@ import java.util.Optional;
  */
 public interface TweetRepository {
 
-    Iterable<Tweet> allTweets();
+    void createNewUser(String userName);
 
-    User createNewUser(String userName);
+    String getUserProfile(String userName);
 
-    Optional<User> getUserByName(String userName);
+    long getLikesCount(long tweetId);
 
-    User getNewUser(String userName);
+    long tweet(String userName, String txt);
 
-    Tweet createAndRegisterNewTweet(User user, String txt);
+    void retweet(String userName, long tweetId);
 
-    List<Tweet> getUserProfile(String userName);
+    boolean doesUserExist(String userName);
 
-    Optional<Tweet> getTweetById(Long id);
-
-    Tweet getNewTweet(String txt, User user);
+    void likeTweet(long tweetId);
 }

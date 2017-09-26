@@ -1,4 +1,4 @@
-package ua.rd.services;
+package ua.rd.repository;
 
 /**
  * Created by Olha_Chuchuk on 9/25/2017.

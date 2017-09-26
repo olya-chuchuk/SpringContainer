@@ -28,12 +28,11 @@ public class JavaBasedConfigRunner {
         String userName = "Test user name";
         String txt = "Test text";
         service.createNewUser(userName);
-        User user = service.getUserByName(userName).get();
-        service.tweet(user, txt);
+        service.tweet(userName, txt);
 
-        List<Tweet> tweets = service.userProfile(userName);
+        String profile = service.userProfile(userName);
 
-        System.out.println(tweets);
+        System.out.println(profile);
 
         context.close();
         repoContext.close();

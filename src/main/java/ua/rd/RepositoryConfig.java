@@ -25,15 +25,15 @@ public class RepositoryConfig {
         return new User(name);
     }
 
-    @Bean(initMethod = "init")
+    @Bean
     public TweetRepository tweetRepository() {
         return new InMemTweetRepository() {
             @Override
-            public Tweet getNewTweet(String txt, User user) {
-                return tweet(txt, user);
+            protected Tweet getNewTweet(String txt, User user) {
+                return RepositoryConfig.this.tweet(txt, user);
             }
             @Override
-            public User getNewUser(String userName) {
+            protected User getNewUser(String userName) {
                 return user(userName);
             }
         };

@@ -11,17 +11,19 @@ import java.util.Optional;
 /**
  * Created by Olha_Chuchuk on 9/11/2017.
  */
-@Component("user")
+@Component
 @Scope(value="prototype")
 public final class User {
 
     private final String name;
     private final List<Tweet> tweets;
+    private final List<Tweet> retweets;
 
 
     public User(String name) {
         this.name = name;
         tweets = new ArrayList<>();
+        retweets = new ArrayList<>();
     }
 
     public String getName() {
@@ -33,6 +35,7 @@ public final class User {
         return "User{" +
                 "name='" + name + '\'' +
                 ", tweets=" + tweets +
+                ", retweets=" + retweets +
                 '}';
     }
 
@@ -45,7 +48,15 @@ public final class User {
         tweets.add(tweet);
     }
 
+    public void addRetweet(Tweet retweet) {
+        retweets.add(retweet);
+    }
+
     public List<Tweet> getAllTweets() {
         return Collections.unmodifiableList(tweets);
+    }
+
+    public List<Tweet> getAllRetweets() {
+        return Collections.unmodifiableList(retweets);
     }
 }

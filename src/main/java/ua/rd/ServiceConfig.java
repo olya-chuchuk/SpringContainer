@@ -40,11 +40,6 @@ public class ServiceConfig {
 
     @Bean
     public TweetService tweetService(TweetRepository tweetRepository) {
-        return new SimpleTweetService(tweetRepository) {
-            @Override
-            public Tweet newTweet(String text, User user) {
-                return new Tweet(text, user);
-            }
-        };
+        return new SimpleTweetService(tweetRepository);
     }
 }
