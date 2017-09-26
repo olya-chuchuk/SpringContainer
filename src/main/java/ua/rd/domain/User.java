@@ -1,5 +1,8 @@
 package ua.rd.domain;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,6 +11,8 @@ import java.util.Optional;
 /**
  * Created by Olha_Chuchuk on 9/11/2017.
  */
+@Component("user")
+@Scope(value="prototype")
 public final class User {
 
     private final String name;

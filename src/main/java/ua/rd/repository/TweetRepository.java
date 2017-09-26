@@ -1,5 +1,6 @@
 package ua.rd.repository;
 
+import org.springframework.beans.factory.annotation.Lookup;
 import ua.rd.domain.Tweet;
 import ua.rd.domain.User;
 
@@ -24,4 +25,6 @@ public interface TweetRepository {
     List<Tweet> getUserProfile(String userName);
 
     Optional<Tweet> getTweetById(Long id);
+
+    Tweet getNewTweet(String txt, User user);
 }

@@ -1,5 +1,6 @@
 package ua.rd.repository;
 
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Repository;
 import ua.rd.domain.Tweet;
 import ua.rd.domain.User;
@@ -48,14 +49,15 @@ public class InMemTweetRepository implements TweetRepository {
     }
 
     @Override
+    @Lookup("user")
     public User getNewUser(String userName) {
         //TODO replace by lookup method in configuration
-        return new User(userName);
+        return null;
     }
 
     @Override
     public Tweet createAndRegisterNewTweet(User user, String txt) {
-        Tweet newTweet = getNewTweet(user, txt);
+        Tweet newTweet = getNewTweet(txt, user);
         tweets.put(newTweet.getId(), newTweet);
         return newTweet;
     }
@@ -71,10 +73,11 @@ public class InMemTweetRepository implements TweetRepository {
         return Optional.ofNullable(tweets.get(id));
     }
 
-
-    protected Tweet getNewTweet(User user, String txt) {
+    @Override
+    @Lookup()
+    public Tweet getNewTweet(String txt, User user) {
         //TODO replace by lookup method in configuration
-        return new Tweet(txt, user);
+        return null;
     }
 
 }

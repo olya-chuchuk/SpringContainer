@@ -1,5 +1,6 @@
 package ua.rd.domain;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ua.rd.services.TweetService;
 
@@ -14,6 +15,8 @@ import java.util.regex.Pattern;
 /**
  * Created by Olha_Chuchuk on 9/11/2017.
  */
+@Component
+@Scope(value="prototype")
 public final class Tweet {
 
     private RawTweet rawTweet;

@@ -14,6 +14,6 @@
     <!--<bean name="tweet" class="ua.rd.domain.Tweet" scope="prototype"/>-->
 
     <context:annotation-config/>
-    <context:component-scan base-package="ua.rd.repository"/>
+    <context:component-scan base-package="ua.rd.repository ua.rd.domain"/>
 
 </beans>

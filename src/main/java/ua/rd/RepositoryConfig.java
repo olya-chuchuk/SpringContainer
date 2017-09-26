@@ -29,7 +29,7 @@ public class RepositoryConfig {
     public TweetRepository tweetRepository() {
         return new InMemTweetRepository() {
             @Override
-            protected Tweet getNewTweet(User user, String txt) {
+            public Tweet getNewTweet(String txt, User user) {
                 return tweet(txt, user);
             }
             @Override
