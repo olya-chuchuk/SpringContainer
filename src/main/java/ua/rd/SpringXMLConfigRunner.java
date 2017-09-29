@@ -15,22 +15,29 @@ import java.util.List;
 public class SpringXMLConfigRunner {
     public static void main(String[] args) throws NoSuchMethodException {
         ConfigurableApplicationContext repoContext = new ClassPathXmlApplicationContext("repoContext.xml");
-        ConfigurableApplicationContext serviceContext = new ClassPathXmlApplicationContext(
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
                 new String[] {"serviceContext.xml"}, repoContext);
-        TweetService tweetService = serviceContext.getBean(TweetService.class);
-        TweetService service = serviceContext.getBean(TweetService.class);
 
+        TweetService service = context.getBean(TweetService.class);
 
-        String userName = "Test user name";
-        String txt = "Test text";
-        service.createNewUser(userName);
-        service.tweet(userName, txt);
+        User user1 = service.createNewUser("Nick");
+        User user2 = service.createNewUser("Jack");
 
-        String profile = service.userProfile(userName);
+        Tweet tweet1 = service.tweet(user1, "Nick's first tweet");
+        Tweet tweet2 = service.tweet(user1, "Some interesting tweet");
+        Tweet tweet3 = service.tweet(user2, "Jack's first tweet");
 
-        System.out.println(profile);
+        service.likeTweet(user2, tweet1);
 
-        serviceContext.close();
+        service.retweet(user2, tweet2);
+
+        Tweet happyTweet = service.tweet(user2, "Happy B-day, @Nick!");
+        service.reply(user1, happyTweet, "Thank you!");
+
+        service.printTimeline(user1);
+        service.printTimeline(user2);
+
+        context.close();
         repoContext.close();
     }
 }

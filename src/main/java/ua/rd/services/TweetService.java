@@ -11,15 +11,25 @@ import java.util.Optional;
  */
 public interface TweetService {
 
-    void createNewUser(String userName);
+    User createNewUser(String userName);
 
-    long tweet(String userName, String txt);
+    Tweet tweet(User user, String txt);
 
-    String userProfile(String userName);
+    void likeTweet(User user, Tweet tweet);
 
-    void likeTweet(long tweetId);
+    void retweet(User user, Tweet tweet);
 
-    long getLikesCount(long tweetId);
+    Tweet reply(User user, Tweet happyTweet, String txt);
 
-    boolean doesUserExist(String userName);
+    void printTimeline(User user);
+
+//    long tweet(String userName, String txt);
+//
+//    String userProfile(String userName);
+//
+//    void likeTweet(long tweetId);
+//
+//    long getLikesCount(long tweetId);
+//
+//    boolean doesUserExist(String userName);
 }

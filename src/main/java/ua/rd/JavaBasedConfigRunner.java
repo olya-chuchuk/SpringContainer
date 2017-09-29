@@ -19,20 +19,26 @@ public class JavaBasedConfigRunner {
                 new AnnotationConfigApplicationContext();
         context.setParent(repoContext);
         context.register(ServiceConfig.class);
-        //context.getEnvironment().setActiveProfiles("dev", "test");
         context.refresh();
 
         TweetService service = context.getBean(TweetService.class);
 
+        User user1 = service.createNewUser("Nick");
+        User user2 = service.createNewUser("Jack");
 
-        String userName = "Test user name";
-        String txt = "Test text";
-        service.createNewUser(userName);
-        service.tweet(userName, txt);
+        Tweet tweet1 = service.tweet(user1, "Nick's first tweet");
+        Tweet tweet2 = service.tweet(user1, "Some interesting tweet");
+        Tweet tweet3 = service.tweet(user2, "Jack's first tweet");
 
-        String profile = service.userProfile(userName);
+        service.likeTweet(user2, tweet1);
 
-        System.out.println(profile);
+        service.retweet(user2, tweet2);
+
+        Tweet happyTweet = service.tweet(user2, "Happy B-day, @Nick!");
+        service.reply(user1, happyTweet, "Thank you!");
+
+        service.printTimeline(user1);
+        service.printTimeline(user2);
 
         context.close();
         repoContext.close();

@@ -1,28 +1,39 @@
 package ua.rd.repository;
 
-import org.springframework.beans.factory.annotation.Lookup;
 import ua.rd.domain.Tweet;
 import ua.rd.domain.User;
 
+import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by Olha_Chuchuk on 9/11/2017.
  */
 public interface TweetRepository {
 
-    void createNewUser(String userName);
+    User createNewUser(String userName);
 
-    String getUserProfile(String userName);
+    User getUserByName(String userName);
 
-    long getLikesCount(long tweetId);
+    Tweet tweet(User user, String txt);
 
-    long tweet(String userName, String txt);
+    Tweet getTweetById(long tweetId);
 
-    void retweet(String userName, long tweetId);
+    long getTweetLikes(Tweet tweet);
+
+    long getTweetRetweets(Tweet tweet);
+
+    List<Tweet> getUserTweets(User user);
+
+    List<Tweet> getUserRetweets(User user);
+
+    Tweet reply(User user, Tweet tweet, String txt);
+
+    void retweet(User user, Tweet tweet);
 
     boolean doesUserExist(String userName);
 
-    void likeTweet(long tweetId);
+    void likeTweet(Tweet tweet);
+
+    Iterator<Tweet> getUserTimeline(User user);
 }

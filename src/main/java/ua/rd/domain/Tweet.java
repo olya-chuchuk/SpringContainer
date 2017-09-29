@@ -4,10 +4,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ua.rd.services.TweetService;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,15 +19,17 @@ public final class Tweet {
     private RawTweet rawTweet;
     private long likes;
     private long retweets;
+    private List<Tweet> replies;
 
     public Tweet(String text, User user) {
         this(text, user, null);
     }
 
-    public Tweet(String text, User user, User repliesTo) {
+    public Tweet(String text, User user, Tweet repliesTo) {
         rawTweet = new RawTweet(text, user, repliesTo);
         likes = 0L;
         retweets = 0L;
+        replies = new LinkedList<>();
     }
 
     public String getText() {
@@ -45,7 +44,7 @@ public final class Tweet {
         return likes;
     }
 
-    public Optional<User> getRepliesTo() {
+    public Optional<Tweet> getRepliesTo() {
         return rawTweet.getRepliesTo();
     }
 
@@ -69,8 +68,8 @@ public final class Tweet {
         return rawTweet.getId();
     }
 
-    public void setText(String text) {
-        rawTweet = new RawTweet(text, rawTweet.getUser(), rawTweet.getRepliesTo().get());
+    public Date getDate() {
+        return rawTweet.getDate();
     }
 
     @Override
@@ -80,6 +79,10 @@ public final class Tweet {
                 ", likes=" + likes +
                 ", retweets=" + retweets +
                 '}';
+    }
+
+    public void addReply(Tweet newTweet) {
+        replies.add(newTweet);
     }
 
     /**
@@ -93,21 +96,23 @@ public final class Tweet {
         private final String text;
         private final User user;
         private final List<String> mentions;
-        private final User repliesTo;
+        private final Tweet repliesTo;
+        private final Date date;
 
         static
         {
             tweetIds = 0L;
         }
 
-        public RawTweet(String text, User user, User repliesTo) {
+        public RawTweet(String text, User user, Tweet repliesTo) {
             this(tweetIds++, text, user, repliesTo);
         }
 
-        private RawTweet(Long tweetId, String text, User user, User repliesTo) {
+        private RawTweet(Long tweetId, String text, User user, Tweet repliesTo) {
             this.tweetId = tweetId;
             this.text = text;
             this.user = user;
+            this.date = new Date();
             mentions = new LinkedList<>();
             Pattern mentionPattern = Pattern.compile("@([a-zA-Z]+)");
             Matcher matcher = mentionPattern.matcher(text);
@@ -126,7 +131,7 @@ public final class Tweet {
             return user;
         }
 
-        public Optional<User> getRepliesTo() {
+        public Optional<Tweet> getRepliesTo() {
             return Optional.ofNullable(repliesTo);
         }
 
@@ -147,6 +152,10 @@ public final class Tweet {
                     ", mentions=" + mentions +
                     ", repliesTo=" + repliesTo +
                     '}';
+        }
+
+        public Date getDate() {
+            return date;
         }
     }
 }
