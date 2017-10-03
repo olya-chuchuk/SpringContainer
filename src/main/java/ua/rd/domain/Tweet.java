@@ -2,7 +2,6 @@ package ua.rd.domain;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import ua.rd.services.TweetService;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -75,9 +74,9 @@ public final class Tweet {
     @Override
     public String toString() {
         return "Tweet{" +
-                "rawTweet=" + rawTweet +
-                ", likes=" + likes +
-                ", retweets=" + retweets +
+                "user=" + rawTweet.getUser().getName() +
+                ", text=" + rawTweet.getText() +
+                ", date=" + rawTweet.getDate() +
                 '}';
     }
 
@@ -86,7 +85,7 @@ public final class Tweet {
     }
 
     /**
-     * fully immutable tweet
+     * fully immutable createTweet
      */
     private static class RawTweet {
 
@@ -141,17 +140,6 @@ public final class Tweet {
 
         public Long getId() {
             return tweetId;
-        }
-
-        @Override
-        public String toString() {
-            return "RawTweet{" +
-                    "tweetId=" + tweetId +
-                    ", text='" + text + '\'' +
-                    ", user=" + user.getName() +
-                    ", mentions=" + mentions +
-                    ", repliesTo=" + repliesTo +
-                    '}';
         }
 
         public Date getDate() {

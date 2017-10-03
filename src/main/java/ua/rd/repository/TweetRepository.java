@@ -36,4 +36,6 @@ public interface TweetRepository {
     void likeTweet(Tweet tweet);
 
     Iterator<Tweet> getUserTimeline(User user);
+
+    List<Tweet> getAllTweets();
 }

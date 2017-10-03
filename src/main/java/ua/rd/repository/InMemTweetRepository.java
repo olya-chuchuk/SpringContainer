@@ -25,6 +25,7 @@ public class InMemTweetRepository implements TweetRepository {
     public User createNewUser(String userName) {
         if(!users.containsKey(userName)) {
             users.put(userName, getNewUser(userName));
+            System.out.println("Created user with name \"" + userName + "\"");
         }
         return users.get(userName);
     }
@@ -42,6 +43,7 @@ public class InMemTweetRepository implements TweetRepository {
         Tweet tweet = new Tweet(txt, user);
         user.addTweet(tweet);
         tweets.put(tweet.getId(), tweet);
+        System.out.println("User \"" + user.getName() + "\" just tweeted \"" + txt + "\"");
         return tweet;
     }
 
@@ -106,78 +108,10 @@ public class InMemTweetRepository implements TweetRepository {
         return timeline.iterator();
     }
 
-//    /**
-//     * Shows String representation of all tweets tweeted by this user and all retweeted tweets
-//     * @param userName
-//     * @return
-//     * @throws NoSuchUserException if user with userName does not exist
-//     */
-//    @Override
-//    public String getUserProfile(String userName){
-//        if(!users.containsKey(userName)) {
-//            throw new NoSuchUserException();
-//        }
-//        User user = users.get(userName);
-//        String profile =
-//                "Tweets: "
-//                + user.getAllTweets().toString()
-//                + " Retweets: "
-//                + user.getAllRetweets().toString();
-//        return profile;
-//    }
-//
-//    @Override
-//    public long getLikesCount(long tweetId) {
-//        if(!tweets.containsKey(tweetId)) {
-//            throw new NoSuchTweetException();
-//        }
-//        return tweets.get(tweetId).getLikesCount();
-//    }
-//
-//    /**
-//     * Creates new tweet of text txt from user userName
-//     * Returns id of newly created tweet
-//     * @param userName
-//     * @param txt
-//     * @return
-//     */
-//    @Override
-//    public long tweet(String userName, String txt) {
-//        if(!users.containsKey(userName)) {
-//            throw new NoSuchUserException();
-//        }
-//        User user = users.get(userName);
-//        Tweet newTweet = getNewTweet(txt, user);
-//        user.addTweet(newTweet);
-//        return newTweet.getId();
-//    }
-//
-//    @Override
-//    public void retweet(String userName, long tweetId) {
-//        if(!users.containsKey(userName)) {
-//            throw new NoSuchUserException();
-//        }
-//        if(!tweets.containsKey(tweetId)) {
-//            throw new NoSuchTweetException();
-//        }
-//        User user = users.get(userName);
-//        Tweet tweet = tweets.get(tweetId);
-//        user.addRetweet(tweet);
-//    }
-//
-//    @Override
-//    public boolean doesUserExist(String userName) {
-//        return users.containsKey(userName);
-//    }
-//
-//    @Override
-//    public void likeTweet(long tweetId) {
-//        if(!tweets.containsKey(tweetId)) {
-//            throw new NoSuchTweetException();
-//        }
-//        Tweet tweet = tweets.get(tweetId);
-//        tweet.like();
-//    }
+    @Override
+    public List<Tweet> getAllTweets() {
+        return new LinkedList<>(tweets.values());
+    }
 
     @Lookup
     protected Tweet getNewTweet(String txt, User user) {

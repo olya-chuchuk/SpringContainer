@@ -1,16 +1,11 @@
 package ua.rd.services;
 
-import org.springframework.beans.factory.annotation.Lookup;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
 import ua.rd.domain.Tweet;
 import ua.rd.domain.User;
-import ua.rd.ioc.Benchmark;
 import ua.rd.repository.TweetRepository;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by Olha_Chuchuk on 9/11/2017.
@@ -24,21 +19,18 @@ public class SimpleTweetService implements TweetService {
     @Override
     public User createNewUser(String userName) {
         User user = tweetRepository.createNewUser(userName);
-        System.out.println("Created user with name \"" + userName + "\"");
         return user;
     }
 
     @Override
-    public Tweet tweet(User user, String txt) {
+    public Tweet createTweet(User user, String txt) {
         Tweet tweet = tweetRepository.tweet(user, txt);
-        System.out.println("User \"" + user.getName() + "\" just tweeted \"" + txt + "\"");
         return tweet;
     }
 
     @Override
     public void likeTweet(User user, Tweet tweet) {
         tweetRepository.likeTweet(tweet);
-        System.out.println("User \"" + user.getName() + "\" likes this: \"" + tweet.getText() + "\"");
     }
 
     @Override
@@ -63,6 +55,11 @@ public class SimpleTweetService implements TweetService {
         System.out.println("RETWEETS:");
         user.getAllRetweets().stream().forEach(System.out::println);
         System.out.println();
+    }
+
+    @Override
+    public List<Tweet> getAllTweets() {
+        return tweetRepository.getAllTweets();
     }
 
     public SimpleTweetService(TweetRepository tweetRepository) {

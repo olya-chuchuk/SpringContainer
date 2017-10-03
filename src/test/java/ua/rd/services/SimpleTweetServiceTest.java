@@ -1,20 +1,5 @@
 package ua.rd.services;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ua.rd.RepositoryConfig;
-import ua.rd.ServiceConfig;
-import ua.rd.domain.Tweet;
-import ua.rd.domain.User;
-import ua.rd.ioc.ApplicationContext;
-import ua.rd.repository.InMemTweetRepository;
-
-import java.util.List;
-
-import static org.junit.Assert.*;
-
 /**
  * Created by Olha Chuchuk on 24.09.2017.
  */
@@ -38,7 +23,7 @@ public class SimpleTweetServiceTest {
 //        String userName = "Test user name";
 //        String txt = "Test text";
 //        service.createNewUser(userName);
-//        service.tweet(userName, txt);
+//        service.createTweet(userName, txt);
 //
 //        String tweets = service.userProfile(userName);
 //
@@ -54,7 +39,7 @@ public class SimpleTweetServiceTest {
 //    public void likeTweetTest() {
 //        String userName = "Test username";
 //        service.createNewUser(userName);
-//        long tweetId = service.tweet(userName, "Test text");
+//        long tweetId = service.createTweet(userName, "Test text");
 //        service.likeTweet(tweetId);
 //    }
 
